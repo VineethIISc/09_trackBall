@@ -1,0 +1,17 @@
+#version 330 core
+
+layout(location = 0) in vec3 position;
+
+//uniform variable for transformation matrix
+uniform mat4 transMatrix[3];
+
+//uniform variable for color
+uniform vec4 inColor[3];
+
+out vec4 outColor;
+
+void main()
+{
+		gl_Position = transMatrix[gl_InstanceID] * vec4(position, 1.0);	
+		outColor = inColor[gl_InstanceID];
+}
