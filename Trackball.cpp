@@ -34,7 +34,7 @@ void Trackball::computeTrackballAxisAngle(Vector2f& currentPosition)
 	m_currentPosition = projectPointToUnitSphere(currentPosition);
 
 	//axis of rotation
-	m_axisOfRot = m_currentPosition.Cross(m_lastPosition);
+	m_axisOfRot = m_lastPosition.Cross(m_currentPosition);
 
 	/*angle is small sin(angle) is approx to angle:
 	magnitude of the axisOfRotation is sin(angle) in this case
