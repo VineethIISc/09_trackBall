@@ -51,6 +51,9 @@ void Trackball::computeTrackballAxisAngle(Vector2f& currentPosition)
 
 	//update the orientation matrix
 	OrientationMatrix = CurrRotationMatrix * OrientationMatrix;
+	
+	// Update the last position
+	m_lastPosition = m_currentPosition;
 
 }
 
