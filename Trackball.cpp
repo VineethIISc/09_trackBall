@@ -37,23 +37,28 @@ void Trackball::computeTrackballAxisAngle(Vector2f& currentPosition)
 	m_axisOfRot = m_lastPosition.Cross(m_currentPosition);
 
 	/*angle is small sin(angle) is approx to angle:
-	magnitude of the axisOfRotation is sin(angle) in this case
-	because the vectors are unit vector (on unit sphere)
-	scale down using some factor*/
-	m_angleOfRot = m_axisOfRot.length() * SCALE_DOWN_FACTOR;
+		magnitude of the axisOfRotation is sin(angle) in this case
+		because the vectors are unit vector (on unit sphere)
+		scale down using some factor*/
+	float Angle = m_axisOfRot.length();
+	if (Angle > 1e-03)
+	{
+		// Angle of rotation
+		m_angleOfRot = Angle * SCALE_DOWN_FACTOR;
 
-	//compute unit axis of rotation
-	m_axisOfRot.Normalize();	
+		//compute unit axis of rotation
+		m_axisOfRot.Normalize();	
 
-	//calculate the rotation matrix using angle-axis matrix
-	Matrix4f CurrRotationMatrix;
-	CurrRotationMatrix.InitAxisRotateTransform(m_axisOfRot, m_angleOfRot);
+		//calculate the rotation matrix using angle-axis matrix
+		Matrix4f CurrRotationMatrix;
+		CurrRotationMatrix.InitAxisRotateTransform(m_axisOfRot, m_angleOfRot);
 
-	//update the orientation matrix
-	OrientationMatrix = CurrRotationMatrix * OrientationMatrix;
-	
-	// Update the last position
-	m_lastPosition = m_currentPosition;
+		//update the orientation matrix
+		OrientationMatrix = CurrRotationMatrix * OrientationMatrix;
+
+		// Update the last position
+		m_lastPosition = m_currentPosition;
+	}
 
 }
 
